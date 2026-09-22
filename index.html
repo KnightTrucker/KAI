@@ -1,36 +1,90 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8">
+<!doctype html>
+<html lang="it"><head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="theme-color" content="#020509"><meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#020509">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Tora Suite</title><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon-192.png">
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020509}body{position:fixed;inset:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#fff}
-#app{position:absolute;inset:0;display:flex;justify-content:center;align-items:flex-start;overflow:hidden;background:#020509}
-.scene{position:relative;height:100dvh;aspect-ratio:882/1783;max-width:100vw;overflow:hidden;background:#020509}.scene>.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
-.launch{position:absolute;z-index:5;width:12%;aspect-ratio:1;border:0;padding:0;background:transparent;border-radius:50%;cursor:pointer;touch-action:manipulation}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020509}
+body{position:fixed;inset:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#fff}
+#app{position:absolute;inset:0;display:flex;justify-content:center;align-items:flex-start;background:#020509;overflow:hidden}
+.scene{position:relative;height:100dvh;aspect-ratio:882/1784;max-width:100vw;overflow:hidden;background:#020509}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.launch{position:absolute;z-index:5;width:12%;aspect-ratio:1;border:0;padding:0;background:transparent;border-radius:50%;touch-action:manipulation}
 #navy{left:66.5%;top:35.2%;--c:#1cff69}#tako{left:55.3%;top:55.1%;--c:#ff941f}#book{left:73.6%;top:76.1%;--c:#29aaff}
 .dot{position:absolute;left:50%;top:50%;width:24%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:#fff;box-shadow:0 0 8px #fff,0 0 18px var(--c),0 0 34px var(--c);animation:pulse 1.8s ease-in-out infinite}
-.dot:before{content:"";position:absolute;inset:-100%;border:2px solid var(--c);border-radius:50%;opacity:.7}@keyframes pulse{50%{transform:translate(-50%,-50%) scale(1.18)}}
-.label{position:absolute;z-index:8;min-width:155px;padding:9px 14px;border:2px solid var(--c);border-radius:18px;background:rgba(2,10,14,.9);box-shadow:0 0 22px var(--c);opacity:0;pointer-events:none;transform:scale(.4);transition:.24s cubic-bezier(.2,.8,.2,1)}
-.label.show{opacity:1;transform:scale(1);pointer-events:auto}.label b{display:block;font-size:17px}.label small{display:block;font-size:12px;opacity:.85;margin-top:2px}
+.dot:before{content:"";position:absolute;inset:-100%;border:2px solid var(--c);border-radius:50%;opacity:.7}
+@keyframes pulse{50%{transform:translate(-50%,-50%) scale(1.15)}}
+.label{position:absolute;z-index:8;min-width:155px;padding:9px 14px;border:2px solid var(--c);border-radius:18px;background:rgba(2,10,14,.91);box-shadow:0 0 18px var(--c);opacity:0;pointer-events:none;transform:scale(.35);transition:opacity .22s ease,transform .3s cubic-bezier(.2,.8,.2,1)}
+.label.show{opacity:1;transform:scale(1);pointer-events:auto}.label b{display:block;font-size:17px}.label small{font-size:12px;opacity:.85}
 #label-navy{left:54%;top:31%;--c:#1cff69;transform-origin:80% 100%}#label-tako{left:53%;top:49.5%;--c:#ff941f;transform-origin:20% 100%}#label-book{right:2%;top:70%;--c:#29aaff;transform-origin:80% 100%}
-#splash{position:fixed;z-index:1000;overflow:hidden;background:#000;opacity:0;pointer-events:none;border-radius:50%;box-shadow:0 0 35px var(--sc,#fff)}#splash img{width:100%;height:100%;object-fit:cover;display:block}
-#splash.go{animation:grow .76s cubic-bezier(.16,.84,.18,1) forwards}@keyframes grow{0%{opacity:1;border-radius:50%}18%{border-radius:22px}100%{opacity:1;left:0!important;top:0!important;width:100vw!important;height:100dvh!important;border-radius:0}}
+
+/* Splash starts as a genuinely tiny image at the tapped dot.
+   JS continuously interpolates its rectangle to the viewport: no keyframe jump. */
+#splash{position:fixed;z-index:9999;display:none;overflow:hidden;background:#000;pointer-events:none;will-change:left,top,width,height,border-radius,box-shadow}
+#splash img{width:100%;height:100%;object-fit:cover;display:block}
 </style></head><body>
-<main id="app"><section class="scene"><img class="bg" src="./assets/suite/home-points.webp?v=7" alt="">
-<button class="launch" id="navy" data-key="navy"><span class="dot"></span></button><button class="launch" id="tako" data-key="tako"><span class="dot"></span></button><button class="launch" id="book" data-key="book"><span class="dot"></span></button>
-<div class="label" id="label-navy"><b>ToraNavy</b><small>Navigazione truck</small></div><div class="label" id="label-tako"><b>ToraTako</b><small>Gestione tachigrafo</small></div><div class="label" id="label-book"><b>ToraBook</b><small>Diario di viaggio</small></div>
-</section></main><div id="splash"><img id="splashImg" alt=""></div>
+<main id="app"><section class="scene">
+<img class="bg" src="./assets/suite/home-points.webp?v=8" alt="">
+<button class="launch" id="navy" data-key="navy"><span class="dot"></span></button>
+<button class="launch" id="tako" data-key="tako"><span class="dot"></span></button>
+<button class="launch" id="book" data-key="book"><span class="dot"></span></button>
+<div class="label" id="label-navy"><b>ToraNavy</b><small>Navigazione truck</small></div>
+<div class="label" id="label-tako"><b>ToraTako</b><small>Gestione tachigrafo</small></div>
+<div class="label" id="label-book"><b>ToraBook</b><small>Diario di viaggio</small></div>
+</section></main>
+<div id="splash"><img id="splashImg" alt=""></div>
 <script>
-(()=>{const apps={
-navy:{url:'https://knighttrucker.github.io/TruckNavigator/',splash:'https://raw.githubusercontent.com/KnightTrucker/TruckNavigator/main/toranavy_startup.webp',color:'#1cff69'},
-tako:{url:'https://knighttrucker.github.io/ToraTako/',splash:'https://raw.githubusercontent.com/KnightTrucker/ToraTako/main/splash-1080x1920.png',color:'#ff941f'},
-book:{url:'https://knighttrucker.github.io/Diario/',splash:'https://raw.githubusercontent.com/KnightTrucker/Diario/main/splash-torabook-a51.png',color:'#29aaff'}};
-let armed=null,timer=0,opening=false;const splash=document.getElementById('splash'),img=document.getElementById('splashImg');
+(()=>{
+const apps={
+ navy:{url:'https://knighttrucker.github.io/TruckNavigator/',splash:'https://raw.githubusercontent.com/KnightTrucker/TruckNavigator/main/toranavy_startup.webp',color:'#1cff69'},
+ tako:{url:'https://knighttrucker.github.io/ToraTako/',splash:'https://raw.githubusercontent.com/KnightTrucker/ToraTako/main/splash-1080x1920.png',color:'#ff941f'},
+ book:{url:'https://knighttrucker.github.io/Diario/',splash:'https://raw.githubusercontent.com/KnightTrucker/Diario/main/splash-torabook-a51.png',color:'#29aaff'}
+};
+let armed=null,timer=0,opening=false,raf=0;
+const splash=document.getElementById('splash'),img=document.getElementById('splashImg');
 function disarm(){clearTimeout(timer);document.querySelectorAll('.label.show').forEach(x=>x.classList.remove('show'));armed=null}
+function reset(){
+ cancelAnimationFrame(raf); clearTimeout(timer); opening=false; armed=null;
+ document.querySelectorAll('.label.show').forEach(x=>x.classList.remove('show'));
+ splash.style.display='none'; splash.removeAttribute('style'); img.removeAttribute('src');
+}
 function arm(k){disarm();armed=k;document.getElementById('label-'+k).classList.add('show');timer=setTimeout(disarm,5000)}
-function launch(k,b){if(opening)return;opening=true;clearTimeout(timer);const a=apps[k],r=b.getBoundingClientRect(),s=Math.max(36,Math.min(r.width,r.height)*.36);splash.style.setProperty('--sc',a.color);splash.style.left=(r.left+r.width/2-s/2)+'px';splash.style.top=(r.top+r.height/2-s/2)+'px';splash.style.width=s+'px';splash.style.height=s+'px';img.src=a.splash;document.getElementById('label-'+k).classList.remove('show');requestAnimationFrame(()=>requestAnimationFrame(()=>splash.classList.add('go')));setTimeout(()=>location.href=a.url,720)}
-document.querySelectorAll('.launch').forEach(b=>b.onclick=()=>{let k=b.dataset.key;if(armed===k)launch(k,b);else arm(k)});document.querySelectorAll('.label').forEach(l=>l.onclick=()=>{let k=l.id.slice(6);if(armed===k)launch(k,document.getElementById(k))});
-addEventListener('pageshow',()=>{opening=false;splash.classList.remove('go');splash.style.opacity='0';disarm()});
-if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=7').catch(()=>{}),{once:true});
-})();</script></body></html>
+function ease(t){return 1-Math.pow(1-t,4)}
+function launch(k,b){
+ if(opening)return; opening=true; clearTimeout(timer);
+ const a=apps[k],r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+ const start=18, dur=1150, t0=performance.now();
+ img.src=a.splash;
+ splash.style.display='block';
+ splash.style.left=(cx-start/2)+'px'; splash.style.top=(cy-start/2)+'px';
+ splash.style.width=start+'px'; splash.style.height=start+'px'; splash.style.borderRadius='50%';
+ splash.style.boxShadow='0 0 22px '+a.color;
+ document.getElementById('label-'+k).classList.remove('show');
+ function frame(now){
+   const p=Math.min(1,(now-t0)/dur),e=ease(p);
+   const left=(cx-start/2)*(1-e), top=(cy-start/2)*(1-e);
+   const w=start+(innerWidth-start)*e, h=start+(innerHeight-start)*e;
+   splash.style.left=left+'px'; splash.style.top=top+'px';
+   splash.style.width=w+'px'; splash.style.height=h+'px';
+   splash.style.borderRadius=(50*(1-e))+'%';
+   splash.style.boxShadow='0 0 '+(22+38*e)+'px '+a.color;
+   if(p<1) raf=requestAnimationFrame(frame);
+   else setTimeout(()=>{location.href=a.url},100);
+ }
+ raf=requestAnimationFrame(frame);
+}
+document.querySelectorAll('.launch').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.key;armed===k?launch(k,b):arm(k)}));
+document.querySelectorAll('.label').forEach(l=>l.addEventListener('click',()=>{const k=l.id.slice(6);if(armed===k)launch(k,document.getElementById(k))}));
+/* Critical fix: every return to Tora Suite starts clean, including BFCache/PWA restore. */
+addEventListener('pageshow',reset);
+addEventListener('pagehide',()=>{cancelAnimationFrame(raf)});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)reset()});
+addEventListener('focus',()=>{if(opening)reset()});
+if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=8').catch(()=>{}),{once:true});
+})();
+</script></body></html>
