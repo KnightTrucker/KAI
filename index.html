@@ -4,66 +4,57 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#020509">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="color-scheme" content="dark">
 <title>Tora Suite</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./icon-192.png">
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020509;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
-body{position:fixed;inset:0}
-#app{position:relative;width:100%;height:100dvh;overflow:hidden;background:#020509}
-.cockpit{position:absolute;inset:0;background:url('./assets/suite/cockpit-a51.webp') center center/cover no-repeat;transform:scale(1.002)}
-.top-shade{position:absolute;inset:0 0 auto;height:15%;background:linear-gradient(180deg,rgba(1,4,8,.92) 0%,rgba(1,4,8,.34) 48%,transparent 100%);pointer-events:none}
-.bottom-shade{position:absolute;inset:auto 0 0;height:14%;background:linear-gradient(0deg,rgba(1,4,8,.94) 0%,rgba(1,4,8,.36) 50%,transparent 100%);pointer-events:none}
-.crest{position:absolute;z-index:20;left:max(12px,env(safe-area-inset-left));top:max(12px,env(safe-area-inset-top));width:clamp(62px,16vw,86px);height:auto;filter:drop-shadow(0 8px 18px rgba(0,0,0,.68));pointer-events:none}
-.signature{position:absolute;z-index:20;right:max(10px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));width:clamp(190px,47vw,275px);height:auto;filter:drop-shadow(0 8px 18px rgba(0,0,0,.72));pointer-events:none}
-.hotspot{position:absolute;z-index:15;border:0;padding:0;margin:0;background:transparent;border-radius:28px;cursor:pointer;touch-action:manipulation;outline:none}
-.hotspot::before{content:"";position:absolute;inset:0;border-radius:inherit;border:1px solid transparent;transition:.12s ease;box-shadow:0 0 0 0 transparent}
-.hotspot:active::before{border-color:rgba(255,255,255,.46);background:rgba(255,255,255,.035);box-shadow:0 0 28px var(--glow),inset 0 0 18px rgba(255,255,255,.03)}
-.hotspot:focus-visible::before{border-color:rgba(255,255,255,.7);box-shadow:0 0 30px var(--glow)}
-#navy{left:52%;top:29%;width:46%;height:23%;--glow:rgba(56,224,143,.68)}
-#tako{left:49%;top:49%;width:45%;height:15%;--glow:rgba(255,151,46,.70)}
-#book{left:55%;top:64%;width:43%;height:22%;--glow:rgba(69,184,255,.70)}
-.toast{position:absolute;z-index:50;left:50%;bottom:18%;transform:translate(-50%,16px);padding:10px 14px;border-radius:999px;background:rgba(2,7,12,.90);border:1px solid rgba(255,255,255,.16);color:#eef6fb;font-size:12px;font-weight:800;opacity:0;pointer-events:none;transition:.2s ease;backdrop-filter:blur(10px);white-space:nowrap}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;background:#020509;overflow:hidden;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+body{position:fixed;inset:0;color:#fff}
+#app{position:relative;width:100%;height:100dvh;display:flex;justify-content:flex-start;align-items:center;background:#020509;overflow:hidden}
+.scene{position:relative;width:min(100vw,calc(100dvh * 941 / 1672));aspect-ratio:941 / 1672;flex:0 0 auto;background:#020509;border:0;touch-action:manipulation}
+.scene img{display:block;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.hotspot{position:absolute;border:0;background:transparent;padding:0;margin:0;border-radius:30px;cursor:pointer;touch-action:manipulation;z-index:5}
+.hotspot::before{content:"";position:absolute;inset:0;border-radius:inherit;border:1px solid transparent;box-shadow:0 0 0 0 transparent;transition:.12s ease}
+.hotspot:active::before,.hotspot:focus-visible::before{border-color:rgba(255,255,255,.65);box-shadow:0 0 30px var(--glow), inset 0 0 16px rgba(255,255,255,.05);background:rgba(255,255,255,.03)}
+#navy{left:55.2%;top:30.6%;width:40.5%;height:19.8%;--glow:rgba(56,224,143,.7)}
+#tako{left:53.0%;top:50.0%;width:39.5%;height:13.8%;--glow:rgba(255,151,46,.7)}
+#book{left:57.1%;top:67.6%;width:36.3%;height:20.5%;--glow:rgba(69,184,255,.7)}
+.toast{position:absolute;left:50%;bottom:max(14px,env(safe-area-inset-bottom));transform:translate(-50%,18px);z-index:10;background:rgba(2,7,12,.92);color:#eef6fb;border:1px solid rgba(255,255,255,.16);padding:10px 14px;border-radius:999px;font-size:12px;font-weight:800;opacity:0;transition:.18s ease;pointer-events:none;backdrop-filter:blur(10px);white-space:nowrap}
 .toast.show{opacity:1;transform:translate(-50%,0)}
-@media (orientation:landscape){
-  .cockpit{background-size:contain;background-position:center;background-color:#020509}
-  .crest{width:60px}.signature{width:200px}
-  #navy{left:51%;top:25%;width:34%;height:32%}
-  #tako{left:48%;top:52%;width:34%;height:21%}
-  #book{left:67%;top:62%;width:29%;height:30%}
+@media (orientation: landscape){
+  #app{justify-content:center;align-items:center}
+  .scene{width:min(calc(100dvh * 941 / 1672), 100vw);}
 }
 </style>
 </head>
 <body>
-<main id="app" aria-label="Tora Suite">
-  <div class="cockpit" aria-hidden="true"></div>
-  <div class="top-shade" aria-hidden="true"></div>
-  <div class="bottom-shade" aria-hidden="true"></div>
-
-  <img class="crest" src="./assets/suite/stemma-araldico.png" alt="Stemma araldico">
-  <img class="signature" src="./assets/suite/powered-by-andrea-zollet.webp" alt="Powered by Andrea Zollet">
-
-  <button id="navy" class="hotspot" type="button" aria-label="Apri ToraNavy" data-url="https://knighttrucker.github.io/TruckNavigator/"></button>
-  <button id="tako" class="hotspot" type="button" aria-label="Apri ToraTako" data-url="https://knighttrucker.github.io/ToraTako/"></button>
-  <button id="book" class="hotspot" type="button" aria-label="Apri ToraBook" data-url="https://knighttrucker.github.io/Diario/"></button>
-
+<main id="app" aria-label="Tora Suite cockpit launcher">
+  <section class="scene" aria-label="Cockpit Tora Suite">
+    <img src="./assets/suite/home-a51.png" alt="Tora Suite cockpit home screen">
+    <button id="navy" class="hotspot" type="button" aria-label="Apri ToraNavy" data-url="https://knighttrucker.github.io/TruckNavigator/"></button>
+    <button id="tako" class="hotspot" type="button" aria-label="Apri ToraTako" data-url="https://knighttrucker.github.io/ToraTako/"></button>
+    <button id="book" class="hotspot" type="button" aria-label="Apri ToraBook" data-url="https://knighttrucker.github.io/Diario/"></button>
+  </section>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </main>
 <script>
 (()=>{
   const toast=document.getElementById('toast');
-  const names={navy:'ToraNavy',tako:'ToraTako',book:'ToraBook'};
+  const labels={navy:'ToraNavy',tako:'ToraTako',book:'ToraBook'};
   let timer=0;
   document.querySelectorAll('.hotspot').forEach(btn=>{
     btn.addEventListener('click',()=>{
       clearTimeout(timer);
-      toast.textContent='Apro '+names[btn.id]+'…';
+      toast.textContent='Apro '+labels[btn.id]+'…';
       toast.classList.add('show');
-      timer=setTimeout(()=>toast.classList.remove('show'),1000);
-      setTimeout(()=>{location.href=btn.dataset.url},90);
+      timer=setTimeout(()=>toast.classList.remove('show'),950);
+      setTimeout(()=>{ location.href=btn.dataset.url; },90);
     });
   });
   if('serviceWorker' in navigator){

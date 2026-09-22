@@ -1,31 +1,18 @@
-const CACHE='torasuite-v0.2.1-cockpit-real';
-const SHELL=[
+const CACHE='torasuite-v0.3-fullscreen-exec';
+const ASSETS=[
   './','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png',
-  './assets/suite/cockpit-a51.webp',
-  './assets/suite/stemma-araldico.png',
-  './assets/suite/powered-by-andrea-zollet.webp'
+  './assets/suite/home-a51.png','./assets/suite/title-premium-tora-suite.png','./assets/suite/icon-master-ts.png',
+  './assets/suite/stemma-originale.png','./assets/suite/powered-by-andrea-zollet-source.jpg'
 ];
-self.addEventListener('install',e=>{
-  e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)));
-  self.skipWaiting();
-});
-self.addEventListener('activate',e=>{
-  e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));
-});
+self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));self.skipWaiting();});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',e=>{
-  if(e.request.method!=='GET')return;
-  const u=new URL(e.request.url);
-  if(u.origin!==self.location.origin)return;
+  if(e.request.method!=='GET') return;
+  const url=new URL(e.request.url);
+  if(url.origin!==self.location.origin) return;
   if(e.request.mode==='navigate'){
-    e.respondWith(
-      fetch(e.request,{cache:'no-store'})
-        .then(r=>{const copy=r.clone();caches.open(CACHE).then(c=>c.put('./index.html',copy)).catch(()=>{});return r})
-        .catch(()=>caches.match('./index.html'))
-    );
+    e.respondWith(fetch(e.request,{cache:'no-store'}).catch(()=>caches.match('./index.html')));
     return;
   }
-  e.respondWith(caches.match(e.request).then(cached=>cached||fetch(e.request).then(r=>{
-    if(r&&r.ok){const copy=r.clone();caches.open(CACHE).then(c=>c.put(e.request,copy)).catch(()=>{})}
-    return r;
-  })));
+  e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(resp=>{if(resp&&resp.ok){const copy=resp.clone();caches.open(CACHE).then(c=>c.put(e.request,copy)).catch(()=>{});} return resp;})));
 });
