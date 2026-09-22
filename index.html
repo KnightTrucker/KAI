@@ -2,136 +2,73 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#050b12">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#020509">
 <meta name="color-scheme" content="dark">
 <title>Tora Suite</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./icon-192.png">
 <style>
-:root{
-  --bg:#04080e; --panel:#07111b; --text:#f6f9fc; --muted:#9cb0c2;
-  --navy:#38e08f; --tako:#ff9b3d; --book:#45b8ff;
-}
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-body{min-height:100svh;overflow-x:hidden;background:
- radial-gradient(circle at 10% -10%,rgba(69,184,255,.16),transparent 28%),
- radial-gradient(circle at 90% 0%,rgba(255,155,61,.12),transparent 24%),
- radial-gradient(circle at 50% 105%,rgba(56,224,143,.12),transparent 28%),#04080e}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:24px 24px;mask-image:linear-gradient(to bottom,#000,transparent 80%)}
-.shell{width:min(1160px,100%);margin:0 auto;padding:max(18px,env(safe-area-inset-top)) 16px max(22px,env(safe-area-inset-bottom))}
-.hero{display:flex;align-items:center;gap:16px;padding:8px 2px 18px}
-.crest-wrap{width:78px;height:78px;flex:0 0 78px;border-radius:24px;padding:8px;background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.13);box-shadow:0 18px 60px rgba(0,0,0,.45),0 0 40px rgba(69,184,255,.08);display:grid;place-items:center;overflow:hidden}
-.crest-wrap img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(0,0,0,.38))}
-.brand{min-width:0}
-.kicker{font-size:11px;font-weight:900;letter-spacing:.25em;color:#8ea6b8;text-transform:uppercase}
-h1{margin:3px 0 2px;font-size:clamp(31px,8vw,54px);line-height:.95;letter-spacing:-.045em;font-weight:950}
-.sub{margin:7px 0 0;color:#9eb2c4;font-size:14px;font-weight:650}
-.tricolor{display:flex;gap:6px;margin-top:12px}.tricolor i{display:block;height:3px;border-radius:999px}.tricolor i:nth-child(1){width:54px;background:var(--navy)}.tricolor i:nth-child(2){width:38px;background:var(--tako)}.tricolor i:nth-child(3){width:46px;background:var(--book)}
-.apps{display:grid;grid-template-columns:1fr;gap:14px}
-.app-card{position:relative;min-height:214px;border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:#08121c;box-shadow:0 22px 58px rgba(0,0,0,.42);isolation:isolate;transform:translateZ(0)}
-.app-card:before{content:"";position:absolute;inset:0;background-image:var(--splash);background-size:cover;background-position:center;filter:saturate(.9) contrast(1.08);transform:scale(1.03);z-index:-3}
-.app-card:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,8,13,.98) 0%,rgba(3,8,13,.92) 36%,rgba(3,8,13,.58) 65%,rgba(3,8,13,.24) 100%),linear-gradient(0deg,rgba(0,0,0,.4),transparent 55%);z-index:-2}
-.app-card .glow{position:absolute;inset:auto -12% -45% 20%;height:70%;background:radial-gradient(ellipse at center,var(--accent-soft),transparent 65%);filter:blur(20px);z-index:-1;pointer-events:none}
-.app-content{height:100%;display:grid;grid-template-columns:86px minmax(0,1fr);gap:14px;align-items:center;padding:20px}
-.app-icon{width:82px;height:82px;border-radius:23px;object-fit:cover;background:#0b1621;border:1px solid rgba(255,255,255,.22);box-shadow:0 14px 35px rgba(0,0,0,.42),0 0 26px var(--accent-soft)}
-.app-info{min-width:0}
-.topline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.app-name{font-size:26px;line-height:1;font-weight:950;letter-spacing:-.035em}
-.pill{font-size:10px;font-weight:900;letter-spacing:.08em;padding:5px 8px;border-radius:999px;color:#dce9f3;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.28);backdrop-filter:blur(8px)}
-.desc{margin:8px 0 14px;max-width:540px;color:#c5d3df;font-size:13px;line-height:1.38;font-weight:600;text-shadow:0 1px 10px #000}
-.actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
-.open-btn{appearance:none;border:0;border-radius:14px;padding:12px 18px;min-width:132px;background:var(--accent);color:#03100b;font-size:14px;font-weight:950;letter-spacing:.055em;box-shadow:0 8px 24px var(--accent-soft);cursor:pointer}
-.open-btn:active{transform:scale(.985)}
-.repo{font-size:11px;color:#8fa4b6;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:210px}
-.navy{--accent:var(--navy);--accent-soft:rgba(56,224,143,.24);--splash:url('https://raw.githubusercontent.com/KnightTrucker/TruckNavigator/main/toranavy_startup.webp')}
-.tako{--accent:var(--tako);--accent-soft:rgba(255,155,61,.27);--splash:url('https://raw.githubusercontent.com/KnightTrucker/ToraTako/main/splash-1080x1920.png')}
-.book{--accent:var(--book);--accent-soft:rgba(69,184,255,.27);--splash:url('https://raw.githubusercontent.com/KnightTrucker/Diario/main/splash-torabook-a51.png')}
-.navy .open-btn{color:#02110a}.tako .open-btn{color:#1a0b00}.book .open-btn{color:#00101c}
-.foot{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#6f8496;font-size:11px;font-weight:700;padding:18px 5px 0}.foot strong{color:#9cb1c1}
-#suiteSplash{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:radial-gradient(circle at 50% 34%,#112336 0,#07101a 34%,#020509 78%);transition:opacity .5s ease,visibility .5s ease}
-#suiteSplash.hide{opacity:0;visibility:hidden}.splash-box{text-align:center}.splash-mark{width:128px;height:128px;margin:auto;border-radius:36px;padding:13px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.12);box-shadow:0 26px 75px rgba(0,0,0,.55),0 0 55px rgba(69,184,255,.10);display:grid;place-items:center}.splash-mark img{width:100%;height:100%;object-fit:contain}.splash-title{font-size:38px;font-weight:950;letter-spacing:-.05em;margin-top:17px}.splash-mini{font-size:11px;color:#8ea5b8;letter-spacing:.23em;font-weight:850;text-transform:uppercase;margin-top:8px}
-@media (min-width:820px){.shell{padding-left:24px;padding-right:24px}.apps{grid-template-columns:repeat(3,1fr)}.app-card{min-height:430px}.app-card:after{background:linear-gradient(0deg,rgba(3,8,13,.98) 0%,rgba(3,8,13,.80) 42%,rgba(3,8,13,.27) 100%)}.app-content{grid-template-columns:1fr;align-content:end;gap:12px;padding:22px}.app-icon{width:88px;height:88px}.repo{max-width:100%}}
-@media (orientation:landscape) and (max-height:620px){.shell{padding-top:10px}.hero{padding-bottom:12px}.crest-wrap{width:60px;height:60px;flex-basis:60px;border-radius:18px}h1{font-size:34px}.sub{font-size:12px}.apps{grid-template-columns:repeat(3,1fr);gap:12px}.app-card{min-height:275px}.app-content{grid-template-columns:66px 1fr;align-items:end;padding:16px}.app-icon{width:64px;height:64px;border-radius:18px}.app-name{font-size:22px}.desc{font-size:11px;margin:6px 0 10px}.open-btn{padding:10px 14px;min-width:100px}.repo{display:none}.foot{padding-top:10px}}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020509;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+body{position:fixed;inset:0}
+#app{position:relative;width:100%;height:100dvh;overflow:hidden;background:#020509}
+.cockpit{position:absolute;inset:0;background:url('./assets/suite/cockpit-a51.webp') center center/cover no-repeat;transform:scale(1.002)}
+.top-shade{position:absolute;inset:0 0 auto;height:15%;background:linear-gradient(180deg,rgba(1,4,8,.92) 0%,rgba(1,4,8,.34) 48%,transparent 100%);pointer-events:none}
+.bottom-shade{position:absolute;inset:auto 0 0;height:14%;background:linear-gradient(0deg,rgba(1,4,8,.94) 0%,rgba(1,4,8,.36) 50%,transparent 100%);pointer-events:none}
+.crest{position:absolute;z-index:20;left:max(12px,env(safe-area-inset-left));top:max(12px,env(safe-area-inset-top));width:clamp(62px,16vw,86px);height:auto;filter:drop-shadow(0 8px 18px rgba(0,0,0,.68));pointer-events:none}
+.signature{position:absolute;z-index:20;right:max(10px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));width:clamp(190px,47vw,275px);height:auto;filter:drop-shadow(0 8px 18px rgba(0,0,0,.72));pointer-events:none}
+.hotspot{position:absolute;z-index:15;border:0;padding:0;margin:0;background:transparent;border-radius:28px;cursor:pointer;touch-action:manipulation;outline:none}
+.hotspot::before{content:"";position:absolute;inset:0;border-radius:inherit;border:1px solid transparent;transition:.12s ease;box-shadow:0 0 0 0 transparent}
+.hotspot:active::before{border-color:rgba(255,255,255,.46);background:rgba(255,255,255,.035);box-shadow:0 0 28px var(--glow),inset 0 0 18px rgba(255,255,255,.03)}
+.hotspot:focus-visible::before{border-color:rgba(255,255,255,.7);box-shadow:0 0 30px var(--glow)}
+#navy{left:52%;top:29%;width:46%;height:23%;--glow:rgba(56,224,143,.68)}
+#tako{left:49%;top:49%;width:45%;height:15%;--glow:rgba(255,151,46,.70)}
+#book{left:55%;top:64%;width:43%;height:22%;--glow:rgba(69,184,255,.70)}
+.toast{position:absolute;z-index:50;left:50%;bottom:18%;transform:translate(-50%,16px);padding:10px 14px;border-radius:999px;background:rgba(2,7,12,.90);border:1px solid rgba(255,255,255,.16);color:#eef6fb;font-size:12px;font-weight:800;opacity:0;pointer-events:none;transition:.2s ease;backdrop-filter:blur(10px);white-space:nowrap}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media (orientation:landscape){
+  .cockpit{background-size:contain;background-position:center;background-color:#020509}
+  .crest{width:60px}.signature{width:200px}
+  #navy{left:51%;top:25%;width:34%;height:32%}
+  #tako{left:48%;top:52%;width:34%;height:21%}
+  #book{left:67%;top:62%;width:29%;height:30%}
+}
 </style>
 </head>
 <body>
-<div id="suiteSplash" aria-hidden="true">
-  <div class="splash-box">
-    <div class="splash-mark"><img src="https://raw.githubusercontent.com/KnightTrucker/ToraTako/main/ToraTako_stemma_araldico_pulito.png" alt=""></div>
-    <div class="splash-title">Tora Suite</div>
-    <div class="splash-mini">Powered by Andrea Zollet</div>
-  </div>
-</div>
-<main class="shell">
-  <header class="hero">
-    <div class="crest-wrap"><img src="https://raw.githubusercontent.com/KnightTrucker/ToraTako/main/ToraTako_stemma_araldico_pulito.png" alt="Stemma Tora Suite"></div>
-    <div class="brand">
-      <div class="kicker">KnightTrucker ecosystem</div>
-      <h1>Tora Suite</h1>
-      <p class="sub">ToraNavy · ToraTako · ToraBook</p>
-      <div class="tricolor" aria-hidden="true"><i></i><i></i><i></i></div>
-    </div>
-  </header>
+<main id="app" aria-label="Tora Suite">
+  <div class="cockpit" aria-hidden="true"></div>
+  <div class="top-shade" aria-hidden="true"></div>
+  <div class="bottom-shade" aria-hidden="true"></div>
 
-  <section class="apps" aria-label="Applicazioni Tora Suite">
-    <article class="app-card navy">
-      <span class="glow"></span>
-      <div class="app-content">
-        <img class="app-icon" src="https://raw.githubusercontent.com/KnightTrucker/TruckNavigator/main/icon-512.png" alt="Icona ToraNavy">
-        <div class="app-info">
-          <div class="topline"><div class="app-name">ToraNavy</div><span class="pill">NAVIGAZIONE</span></div>
-          <p class="desc">Navigatore professionale per mezzi pesanti, pianificazione e cockpit di viaggio.</p>
-          <div class="actions"><button class="open-btn" data-url="https://knighttrucker.github.io/TruckNavigator/">APRI</button><span class="repo">TruckNavigator</span></div>
-        </div>
-      </div>
-    </article>
+  <img class="crest" src="./assets/suite/stemma-araldico.png" alt="Stemma araldico">
+  <img class="signature" src="./assets/suite/powered-by-andrea-zollet.webp" alt="Powered by Andrea Zollet">
 
-    <article class="app-card tako">
-      <span class="glow"></span>
-      <div class="app-content">
-        <img class="app-icon" src="https://raw.githubusercontent.com/KnightTrucker/ToraTako/main/icon-512.png" alt="Icona ToraTako">
-        <div class="app-info">
-          <div class="topline"><div class="app-name">ToraTako</div><span class="pill">TACHIGRAFO</span></div>
-          <p class="desc">Dashboard tachigrafica DTCO, stampate, tempi, riposi e controllo carta conducente.</p>
-          <div class="actions"><button class="open-btn" data-url="https://knighttrucker.github.io/ToraTako/">APRI</button><span class="repo">ToraTako</span></div>
-        </div>
-      </div>
-    </article>
+  <button id="navy" class="hotspot" type="button" aria-label="Apri ToraNavy" data-url="https://knighttrucker.github.io/TruckNavigator/"></button>
+  <button id="tako" class="hotspot" type="button" aria-label="Apri ToraTako" data-url="https://knighttrucker.github.io/ToraTako/"></button>
+  <button id="book" class="hotspot" type="button" aria-label="Apri ToraBook" data-url="https://knighttrucker.github.io/Diario/"></button>
 
-    <article class="app-card book">
-      <span class="glow"></span>
-      <div class="app-content">
-        <img class="app-icon" src="https://raw.githubusercontent.com/KnightTrucker/Diario/main/icon-512-v37.png" alt="Icona ToraBook">
-        <div class="app-info">
-          <div class="topline"><div class="app-name">ToraBook</div><span class="pill">DIARIO</span></div>
-          <p class="desc">Diario di viaggio del camionista: giornate, viaggi, carichi, blocchi HGV e rapportini.</p>
-          <div class="actions"><button class="open-btn" data-url="https://knighttrucker.github.io/Diario/">APRI</button><span class="repo">Diario</span></div>
-        </div>
-      </div>
-    </article>
-  </section>
-
-  <footer class="foot"><span>Tre app. Un solo accesso.</span><span><strong>Powered by Andrea Zollet</strong></span></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </main>
 <script>
-(function(){
-  const splash=document.getElementById('suiteSplash');
-  const born=performance.now();
-  function closeSplash(){const d=Math.max(0,1200-(performance.now()-born));setTimeout(()=>splash.classList.add('hide'),d)}
-  if(document.readyState==='complete') closeSplash(); else addEventListener('load',closeSplash,{once:true});
-  setTimeout(closeSplash,2800);
-
-  document.querySelectorAll('.open-btn').forEach(btn=>{
+(()=>{
+  const toast=document.getElementById('toast');
+  const names={navy:'ToraNavy',tako:'ToraTako',book:'ToraBook'};
+  let timer=0;
+  document.querySelectorAll('.hotspot').forEach(btn=>{
     btn.addEventListener('click',()=>{
-      const url=btn.dataset.url;
-      const w=window.open(url,'_blank','noopener');
-      if(!w) location.href=url;
+      clearTimeout(timer);
+      toast.textContent='Apro '+names[btn.id]+'…';
+      toast.classList.add('show');
+      timer=setTimeout(()=>toast.classList.remove('show'),1000);
+      setTimeout(()=>{location.href=btn.dataset.url},90);
     });
   });
-  if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
+  if('serviceWorker' in navigator){
+    addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}),{once:true});
+  }
 })();
 </script>
 </body>
