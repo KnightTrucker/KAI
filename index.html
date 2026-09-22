@@ -17,7 +17,7 @@
 html,body{margin:0;width:100%;height:100%;background:#020509;overflow:hidden;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 body{position:fixed;inset:0;color:#fff}
 #app{position:relative;width:100%;height:100dvh;display:flex;justify-content:flex-start;align-items:center;background:#020509;overflow:hidden}
-.scene{position:relative;width:min(100vw,calc(100dvh * 941 / 1672));aspect-ratio:941 / 1672;flex:0 0 auto;background:#020509 url('./assets/suite/cockpit-a51.webp?v=4') center center/contain no-repeat;border:0;touch-action:manipulation}
+.scene{position:relative;width:min(100vw,calc(100dvh * 768 / 1536));aspect-ratio:768 / 1536;flex:0 0 auto;background:#020509 url('./assets/suite/cockpit-a51.webp?v=4') center center/contain no-repeat;border:0;touch-action:manipulation}
 .scene img{display:block;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none;pointer-events:none}
 .hotspot{position:absolute;border:0;background:transparent;padding:0;margin:0;border-radius:30px;cursor:pointer;touch-action:manipulation;z-index:5}
 .hotspot::before{content:"";position:absolute;inset:0;border-radius:inherit;border:1px solid transparent;box-shadow:0 0 0 0 transparent;transition:.12s ease}
@@ -33,7 +33,7 @@ body{position:fixed;inset:0;color:#fff}
 <body>
 <main id="app" aria-label="Tora Suite cockpit launcher">
   <section class="scene" aria-label="Cockpit Tora Suite">
-    <img id="homeVisual" src="./assets/suite/home-a51.png?v=4" alt="" decoding="async" fetchpriority="high">
+    <img id="homeVisual" src="./assets/suite/home-a51-clean.jpg?v=5" alt="" decoding="async" fetchpriority="high">
     <button id="navy" class="hotspot" type="button" aria-label="Apri ToraNavy" data-url="https://knighttrucker.github.io/TruckNavigator/"></button>
     <button id="tako" class="hotspot" type="button" aria-label="Apri ToraTako" data-url="https://knighttrucker.github.io/ToraTako/"></button>
     <button id="book" class="hotspot" type="button" aria-label="Apri ToraBook" data-url="https://knighttrucker.github.io/Diario/"></button>
@@ -42,14 +42,6 @@ body{position:fixed;inset:0;color:#fff}
 </main>
 <script>
 (()=>{
-  const home=document.getElementById('homeVisual');
-  const fallbacks=[
-    'https://raw.githubusercontent.com/KnightTrucker/KAI/main/assets/suite/home-a51.png',
-    './assets/suite/cockpit-a51.webp?v=4',
-    'https://raw.githubusercontent.com/KnightTrucker/KAI/main/assets/suite/cockpit-a51.webp'
-  ];
-  let fi=0;
-  home.addEventListener('error',()=>{if(fi<fallbacks.length){home.src=fallbacks[fi++]}else{home.style.display='none'}});
   const toast=document.getElementById('toast');
   const labels={navy:'ToraNavy',tako:'ToraTako',book:'ToraBook'};
   let timer=0;
@@ -62,7 +54,7 @@ body{position:fixed;inset:0;color:#fff}
       setTimeout(()=>{location.href=btn.dataset.url},90);
     });
   });
-  if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=4').catch(()=>{}),{once:true})}
+  if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=5').catch(()=>{}),{once:true})}
 })();
 </script>
 </body>
