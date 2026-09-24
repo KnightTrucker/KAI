@@ -53,6 +53,43 @@ body{position:fixed;inset:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,
 .ops{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}.op{min-height:42px;border:1px solid #667177;border-radius:7px;background:#20262a;color:#fff;font-size:20px;font-weight:900}.op.sel{border-color:#54b8ff;box-shadow:0 0 9px #2876b3}.go{width:100%;min-height:44px;margin-top:7px;border:1px solid #4c965b;border-radius:7px;background:linear-gradient(#245b31,#102717);color:#fff;font-weight:900;letter-spacing:.08em}
 .result{margin-top:7px;padding:6px;border:1px solid #4a6250;border-radius:8px;background:#020603;text-align:center}.result small{display:block;color:#aeb7b1;font-size:8px;letter-spacing:.12em}.result strong{display:block;color:#42ff64;font:900 clamp(25px,7vw,42px)/1.05 "Courier New",monospace;text-shadow:0 0 11px #1aa33c}.result span{font-size:11px;color:#d6ded8}
 @media(orientation:landscape){.calcShell{max-width:1100px}.coreGrid{grid-template-columns:.55fr 1.45fr}.flux{max-height:180px}.modeTabs{grid-template-columns:repeat(4,1fr)}}
+
+/* v0.10 - real assets + responsive containment */
+#morph{background:#020405;border-color:#606970}
+#morph img{width:100%;height:100%;object-fit:cover;display:block}
+.fluxReal{width:100%;height:100%;min-height:0;overflow:hidden;border:4px solid #30363a;border-radius:15px;background:#000;box-shadow:inset 0 0 20px #000}
+.fluxReal img{display:block;width:100%;height:100%;object-fit:cover}
+.fluxMetal{display:flex;flex-direction:column;min-height:0}
+.calcFooter{display:grid;grid-template-columns:1fr minmax(150px,38%);align-items:end;margin-top:7px;min-height:54px}
+.calcFooter img{justify-self:end;display:block;width:100%;max-width:310px;height:auto;border-radius:7px}
+#calcLayer{overflow:hidden}
+.calc{height:100dvh;min-height:0;overflow:auto;padding:max(6px,env(safe-area-inset-top)) max(6px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-left))}
+.calcShell{max-width:calc(100vw - 12px);overflow:hidden}
+.coreGrid,.fields,.modeTabs,.work,.circuits,.timeRow,.digits{min-width:0}
+.field{min-width:0}.field input{min-width:0;max-width:100%;font-size:clamp(13px,4vw,18px)}
+@media (orientation:portrait){
+ .calcShell{width:100%}
+ .coreGrid{grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr)}
+ .fluxReal{aspect-ratio:.66/1}
+ .calcFooter{grid-template-columns:1fr minmax(145px,42%)}
+}
+@media (orientation:landscape){
+ #calcLayer{overflow:hidden}
+ .calc{height:100dvh;overflow:auto;padding:5px}
+ .calcShell{width:min(1180px,calc(100vw - 10px));max-width:calc(100vw - 10px);padding:6px}
+ .calcTop{margin-bottom:5px}.closeCalc{min-height:36px;padding:5px 9px}
+ .coreGrid{grid-template-columns:minmax(150px,.52fr) minmax(0,1.48fr);gap:6px}
+ .fluxReal{height:150px}
+ .circuits{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+ .timeRow{padding:4px}.digits{grid-template-columns:.8fr .9fr 1.1fr .75fr .75fr}
+ .digitBox strong{font-size:clamp(10px,1.5vw,17px)}
+ .modeTabs{grid-template-columns:repeat(4,minmax(0,1fr));margin:5px 0}
+ .mode{min-height:34px;font-size:9px}
+ .work{padding:5px}.field input{min-height:36px;font-size:15px}.op{min-height:34px}.go{min-height:36px;margin-top:5px}
+ .result{margin-top:5px;padding:4px}.result strong{font-size:28px}
+ .calcFooter{margin-top:4px;min-height:36px;grid-template-columns:1fr minmax(130px,24%)}
+ .calcFooter img{max-height:42px;width:auto;max-width:100%}
+}
 </style></head><body>
 <main id="app"><section class="scene">
 <img class="bg" src="./assets/suite/home-points.webp?v=8" alt="">
@@ -67,11 +104,12 @@ body{position:fixed;inset:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,
 </section></main>
 <div id="splash"><img id="splashImg" alt=""></div>
 
-<div id="morph"><i class="mfArm mf1"></i><i class="mfArm mf2"></i><i class="mfArm mf3"></i><i class="mfSpark"></i></div>
+<div id="morph"><img src="./assets/suite/flux-capacitor-real.webp?v=10" alt=""></div>
 <section id="calcLayer"><div class="calc"><div class="calcShell">
 <div class="calcTop"><button id="closeCalc" class="closeCalc">← TORA SUITE</button><div class="calcTitle"><b>CALCOLATRICE DEL TEMPO</b><span>TIME CIRCUITS</span></div></div>
 <div class="coreGrid">
-<div class="metal"><div class="plate">FLUSSO CANALIZZATORE</div><div class="flux"><i class="fArm fa1"></i><i class="fArm fa2"></i><i class="fArm fa3"></i><i class="fCenter"></i></div></div>
+<div class="metal fluxMetal"><div class="plate">FLUSSO CANALIZZATORE</div>
+<div class="fluxReal"><img src="./assets/suite/flux-capacitor-real.webp?v=10" alt="Flusso canalizzatore"></div></div>
 <div class="circuits"><div class="timeRow red"><div class="rowHead">DESTINATION TIME</div><div class="digits" id="destDigits"></div></div><div class="timeRow green"><div class="rowHead">PRESENT TIME</div><div class="digits" id="nowDigits"></div></div><div class="timeRow amber"><div class="rowHead">LAST TIME DEPARTED</div><div class="digits" id="lastDigits"></div></div></div>
 </div>
 <div class="modeTabs"><button class="mode active" data-mode="duration">SOMMA / SOTTRAI</button><button class="mode" data-mode="hours">DA ORA A ORA</button><button class="mode" data-mode="dates">DATA / ORA</button><button class="mode" data-mode="shift">± DATA / ORA</button></div>
@@ -95,8 +133,8 @@ function arm(k){disarm();armed=k;document.getElementById('label-'+k).classList.a
 const ease=t=>1-Math.pow(1-t,4);
 function rectAnim(el,cx,cy,start,dur,reverse,done){const t0=performance.now();el.style.display='block';function f(now){let p=Math.min(1,(now-t0)/dur),e=ease(p);if(reverse)e=1-e;el.style.left=((cx-start/2)*(1-e))+'px';el.style.top=((cy-start/2)*(1-e))+'px';el.style.width=(start+(innerWidth-start)*e)+'px';el.style.height=(start+(innerHeight-start)*e)+'px';el.style.borderRadius=(50*(1-e))+'%';if(p<1)raf=requestAnimationFrame(f);else done&&done()}raf=requestAnimationFrame(f)}
 function launchExternal(k,b){if(opening)return;opening=true;clearTimeout(timer);const a=apps[k],r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;img.src=a.splash;splash.style.boxShadow='0 0 25px '+a.color;document.getElementById('label-'+k).classList.remove('show');rectAnim(splash,cx,cy,18,1150,false,()=>setTimeout(()=>location.href=a.url,100))}
-function openCalc(b){if(opening)return;opening=true;clearTimeout(timer);document.getElementById('label-timecalc').classList.remove('show');const r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;rectAnim(morph,cx,cy,18,1550,false,()=>{calc.classList.add('on');morph.style.display='none';opening=false;setNow()})}
-function closeCalc(){if(opening)return;opening=true;const b=document.getElementById('timecalc'),r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;calc.classList.remove('on');rectAnim(morph,cx,cy,18,1200,true,()=>{morph.style.display='none';opening=false;disarm()})}
+function openCalc(b){if(opening)return;opening=true;clearTimeout(timer);document.getElementById('label-timecalc').classList.remove('show');const r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;rectAnim(morph,cx,cy,22,1750,false,()=>{calc.classList.add('on');morph.style.display='none';opening=false;setNow()})}
+function closeCalc(){if(opening)return;opening=true;const b=document.getElementById('timecalc'),r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;calc.classList.remove('on');rectAnim(morph,cx,cy,22,1750,true,()=>{morph.style.display='none';opening=false;disarm()})}
 document.querySelectorAll('.launch').forEach(b=>b.onclick=()=>{const k=b.dataset.key;if(armed!==k)return arm(k);k==='timecalc'?openCalc(b):launchExternal(k,b)});
 document.querySelectorAll('.label').forEach(l=>l.onclick=()=>{const k=l.id.slice(6);if(armed===k){const b=document.getElementById(k);k==='timecalc'?openCalc(b):launchExternal(k,b)}});
 document.getElementById('closeCalc').onclick=closeCalc;
@@ -112,6 +150,6 @@ document.querySelectorAll('[data-shift]').forEach(x=>x.onclick=()=>{document.que
 calculate.onclick=()=>{try{if(mode==='duration'){let a=parseDur(d1.value),b=parseDur(d2.value);if(a===null||b===null)throw 0;show(op==='+'?a+b:a-b)}else if(mode==='hours'){let a=parseDur(h1.value),b=parseDur(h2.value);if(a===null||b===null)throw 0;let v=b-a;if(v<0)v+=1440;show(v)}else if(mode==='dates'){let a=new Date(dt1.value),b=new Date(dt2.value);if(isNaN(a)||isNaN(b))throw 0;show((b-a)/60000,b)}else{let a=new Date(sd.value),v=parseDur(st.value);if(isNaN(a)||v===null)throw 0;let d=new Date(a.getTime()+(shiftOp==='+'?v:-v)*60000);show((d-a)/60000,d)}}catch(e){resultMain.textContent='ERRORE';resultLong.textContent='Controlla i valori inseriti'}};
 setNow();setInterval(()=>{if(calc.classList.contains('on'))setNow()},30000);
 addEventListener('pageshow',()=>{resetExternal();calc.classList.remove('on')});addEventListener('pagehide',()=>cancelAnimationFrame(raf));document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!calc.classList.contains('on'))resetExternal()});
-if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=9').catch(()=>{}),{once:true});
+if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=10').catch(()=>{}),{once:true});
 })();
 </script></body></html>
