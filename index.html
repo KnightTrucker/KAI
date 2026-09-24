@@ -27,64 +27,91 @@ body{position:fixed;inset:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,
    JS continuously interpolates its rectangle to the viewport: no keyframe jump. */
 #splash{position:fixed;z-index:9999;display:none;overflow:hidden;background:#000;pointer-events:none;will-change:left,top,width,height,border-radius,box-shadow}
 #splash img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* --- Calcolatrice del tempo v0.9 --- */
+#timecalc{left:19%;top:67%;--c:#ff3030}
+#label-timecalc{left:6%;top:61%;--c:#ff3030;transform-origin:35% 100%}
+#morph{position:fixed;z-index:12000;display:none;overflow:hidden;pointer-events:none;background:radial-gradient(circle,#163d62 0,#080b0d 52%,#000 100%);border:3px solid #606970;box-shadow:0 0 24px #ff3030,0 0 52px #ff8a00;will-change:left,top,width,height,border-radius}
+.mfArm{position:absolute;left:50%;top:50%;width:7px;height:36%;border-radius:7px;background:#fff1bd;box-shadow:0 0 7px #fff,0 0 18px #ff9d00,0 0 30px #ff5b00;transform-origin:50% 0}
+.mf1{transform:translate(-50%,0) rotate(0deg)}.mf2{transform:translate(-50%,0) rotate(120deg)}.mf3{transform:translate(-50%,0) rotate(240deg)}
+.mfSpark{position:absolute;left:50%;top:50%;width:16px;height:16px;transform:translate(-50%,-50%);border-radius:50%;background:#fff;box-shadow:0 0 12px #fff,0 0 28px #45baff,0 0 50px #ff8a00}
+#calcLayer{position:fixed;inset:0;z-index:11000;display:none;overflow:auto;background:#050708;opacity:0}
+#calcLayer.on{display:block;animation:calcIn .28s ease forwards}@keyframes calcIn{to{opacity:1}}
+.calc{min-height:100%;padding:max(8px,env(safe-area-inset-top)) 8px max(10px,env(safe-area-inset-bottom));background:radial-gradient(circle at 50% 20%,#293035 0,#0b0e10 45%,#020303 100%)}
+.calcShell{width:min(100%,900px);margin:auto;padding:8px;border:2px solid #596168;border-radius:15px;background:linear-gradient(145deg,#20262a,#080a0b 58%,#181c1f);box-shadow:inset 0 0 0 2px #050606,inset 0 0 26px #000}
+.calcTop{display:flex;align-items:center;gap:7px;margin-bottom:7px}.closeCalc{min-height:42px;border:1px solid #7d878d;border-radius:9px;background:linear-gradient(#30373b,#101315);color:#fff;font-weight:900;padding:7px 10px}
+.calcTitle{flex:1;text-align:center}.calcTitle b{display:block;color:#f1c75c;font-size:clamp(15px,4.3vw,24px);letter-spacing:.06em}.calcTitle span{font-size:9px;color:#aeb8be;letter-spacing:.18em}
+.coreGrid{display:grid;grid-template-columns:.78fr 1.22fr;gap:6px}.metal{min-width:0;padding:5px;border:1px solid #596168;border-radius:10px;background:linear-gradient(155deg,#282e32,#090b0c 66%);box-shadow:inset 0 0 0 2px #070809,inset 0 0 15px #000}
+.plate{text-align:center;background:#761b18;border:1px solid #b44;border-radius:4px;color:#f5e6e6;font-size:8px;font-weight:900;letter-spacing:.04em;padding:4px;margin-bottom:5px}
+.flux{position:relative;aspect-ratio:1/1.12;max-height:250px;margin:auto;overflow:hidden;border:4px solid #30363a;border-radius:15px;background:radial-gradient(circle at 50% 49%,#09243e 0,#060809 55%,#000 100%);box-shadow:inset 0 0 20px #000}
+.fArm{position:absolute;left:50%;top:50%;width:7px;height:37%;border-radius:7px;background:#ffe9ae;box-shadow:0 0 8px #fff,0 0 18px #ff9800,0 0 29px #ff5c00;transform-origin:50% 0}.fa1{transform:translate(-50%,0)}.fa2{transform:translate(-50%,0) rotate(120deg)}.fa3{transform:translate(-50%,0) rotate(240deg)}
+.fCenter{position:absolute;left:50%;top:50%;width:18px;height:18px;border-radius:50%;transform:translate(-50%,-50%);background:#fff;box-shadow:0 0 11px #fff,0 0 27px #42b8ff,0 0 45px #ff8500;animation:fp 1.15s ease-in-out infinite}@keyframes fp{50%{transform:translate(-50%,-50%) scale(1.35)}}
+.circuits{display:grid;gap:5px}.timeRow{--d:#fff;padding:5px;border:1px solid #4d5458;border-radius:6px;background:#07090a}.timeRow.red{--d:#ff3c31}.timeRow.green{--d:#3cff5b}.timeRow.amber{--d:#ffb21c}
+.rowHead{text-align:center;color:var(--d);font-size:8px;font-weight:900;letter-spacing:.1em;margin-bottom:3px}.digits{display:grid;grid-template-columns:.85fr .95fr 1.18fr .8fr .8fr;gap:2px}.digitBox{min-width:0;text-align:center}.digitBox small{display:block;color:#aeb5b9;font-size:6px}.digitBox strong{display:block;overflow:hidden;padding:4px 1px;border:1px solid #303438;border-radius:3px;background:#020303;color:var(--d);font:900 clamp(11px,3.3vw,20px)/1 "Courier New",monospace;text-shadow:0 0 8px var(--d);white-space:nowrap}
+.modeTabs{display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin:7px 0}.mode{min-height:42px;border:1px solid #596168;border-radius:7px;background:#111518;color:#dce2e5;font-size:10px;font-weight:900;padding:5px}.mode.active{border-color:#ff4a3d;box-shadow:inset 0 0 12px #681817}
+.work{padding:7px;border:1px solid #596168;border-radius:10px;background:#090c0d}.panel{display:none}.panel.active{display:block}.fields{display:grid;grid-template-columns:1fr 1fr;gap:6px}.field label{display:block;margin:0 0 3px 2px;color:#aeb7bc;font-size:8px}.field input{width:100%;min-height:43px;padding:7px;border:1px solid #555;border-radius:6px;background:#020303;color:#ff4b40;font:900 18px "Courier New",monospace}
+.ops{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}.op{min-height:42px;border:1px solid #667177;border-radius:7px;background:#20262a;color:#fff;font-size:20px;font-weight:900}.op.sel{border-color:#54b8ff;box-shadow:0 0 9px #2876b3}.go{width:100%;min-height:44px;margin-top:7px;border:1px solid #4c965b;border-radius:7px;background:linear-gradient(#245b31,#102717);color:#fff;font-weight:900;letter-spacing:.08em}
+.result{margin-top:7px;padding:6px;border:1px solid #4a6250;border-radius:8px;background:#020603;text-align:center}.result small{display:block;color:#aeb7b1;font-size:8px;letter-spacing:.12em}.result strong{display:block;color:#42ff64;font:900 clamp(25px,7vw,42px)/1.05 "Courier New",monospace;text-shadow:0 0 11px #1aa33c}.result span{font-size:11px;color:#d6ded8}
+@media(orientation:landscape){.calcShell{max-width:1100px}.coreGrid{grid-template-columns:.55fr 1.45fr}.flux{max-height:180px}.modeTabs{grid-template-columns:repeat(4,1fr)}}
 </style></head><body>
 <main id="app"><section class="scene">
 <img class="bg" src="./assets/suite/home-points.webp?v=8" alt="">
 <button class="launch" id="navy" data-key="navy"><span class="dot"></span></button>
 <button class="launch" id="tako" data-key="tako"><span class="dot"></span></button>
 <button class="launch" id="book" data-key="book"><span class="dot"></span></button>
+<button class="launch" id="timecalc" data-key="timecalc"><span class="dot"></span></button>
 <div class="label" id="label-navy"><b>ToraNavy</b><small>Navigazione truck</small></div>
 <div class="label" id="label-tako"><b>ToraTako</b><small>Gestione tachigrafo</small></div>
 <div class="label" id="label-book"><b>ToraBook</b><small>Diario di viaggio</small></div>
+<div class="label" id="label-timecalc"><b>Calcolatrice del tempo</b><small>Ore, durate e date</small></div>
 </section></main>
 <div id="splash"><img id="splashImg" alt=""></div>
+
+<div id="morph"><i class="mfArm mf1"></i><i class="mfArm mf2"></i><i class="mfArm mf3"></i><i class="mfSpark"></i></div>
+<section id="calcLayer"><div class="calc"><div class="calcShell">
+<div class="calcTop"><button id="closeCalc" class="closeCalc">← TORA SUITE</button><div class="calcTitle"><b>CALCOLATRICE DEL TEMPO</b><span>TIME CIRCUITS</span></div></div>
+<div class="coreGrid">
+<div class="metal"><div class="plate">FLUSSO CANALIZZATORE</div><div class="flux"><i class="fArm fa1"></i><i class="fArm fa2"></i><i class="fArm fa3"></i><i class="fCenter"></i></div></div>
+<div class="circuits"><div class="timeRow red"><div class="rowHead">DESTINATION TIME</div><div class="digits" id="destDigits"></div></div><div class="timeRow green"><div class="rowHead">PRESENT TIME</div><div class="digits" id="nowDigits"></div></div><div class="timeRow amber"><div class="rowHead">LAST TIME DEPARTED</div><div class="digits" id="lastDigits"></div></div></div>
+</div>
+<div class="modeTabs"><button class="mode active" data-mode="duration">SOMMA / SOTTRAI</button><button class="mode" data-mode="hours">DA ORA A ORA</button><button class="mode" data-mode="dates">DATA / ORA</button><button class="mode" data-mode="shift">± DATA / ORA</button></div>
+<div class="work">
+<div class="panel active" id="p-duration"><div class="fields"><div class="field"><label>PRIMO VALORE (HH:MM)</label><input id="d1" value="04:35" inputmode="numeric"></div><div class="field"><label>SECONDO VALORE (HH:MM)</label><input id="d2" value="02:48" inputmode="numeric"></div></div><div class="ops"><button class="op sel" data-op="+">＋</button><button class="op" data-op="-">−</button></div></div>
+<div class="panel" id="p-hours"><div class="fields"><div class="field"><label>ORA INIZIO</label><input id="h1" type="time" value="18:45"></div><div class="field"><label>ORA FINE</label><input id="h2" type="time" value="03:20"></div></div></div>
+<div class="panel" id="p-dates"><div class="fields"><div class="field"><label>DATA E ORA INIZIO</label><input id="dt1" type="datetime-local"></div><div class="field"><label>DATA E ORA FINE</label><input id="dt2" type="datetime-local"></div></div></div>
+<div class="panel" id="p-shift"><div class="fields"><div class="field"><label>DATA E ORA</label><input id="sd" type="datetime-local"></div><div class="field"><label>DURATA (HH:MM)</label><input id="st" value="09:15" inputmode="numeric"></div></div><div class="ops"><button class="op sel" data-shift="+">＋</button><button class="op" data-shift="-">−</button></div></div>
+<button id="calculate" class="go">CALCOLA</button><div class="result"><small>RISULTATO</small><strong id="resultMain">07:23</strong><span id="resultLong">7 ore e 23 minuti</span></div>
+</div></div></div></section>
+
+
 <script>
 (()=>{
-const apps={
- navy:{url:'https://knighttrucker.github.io/TruckNavigator/',splash:'https://raw.githubusercontent.com/KnightTrucker/TruckNavigator/main/toranavy_startup.webp',color:'#1cff69'},
- tako:{url:'https://knighttrucker.github.io/ToraTako/',splash:'https://raw.githubusercontent.com/KnightTrucker/ToraTako/main/splash-1080x1920.png',color:'#ff941f'},
- book:{url:'https://knighttrucker.github.io/Diario/',splash:'https://raw.githubusercontent.com/KnightTrucker/Diario/main/splash-torabook-a51.png',color:'#29aaff'}
-};
-let armed=null,timer=0,opening=false,raf=0;
-const splash=document.getElementById('splash'),img=document.getElementById('splashImg');
+const apps={navy:{url:'https://knighttrucker.github.io/TruckNavigator/',splash:'https://raw.githubusercontent.com/KnightTrucker/TruckNavigator/main/toranavy_startup.webp',color:'#1cff69'},tako:{url:'https://knighttrucker.github.io/ToraTako/',splash:'https://raw.githubusercontent.com/KnightTrucker/ToraTako/main/splash-1080x1920.png',color:'#ff941f'},book:{url:'https://knighttrucker.github.io/Diario/',splash:'https://raw.githubusercontent.com/KnightTrucker/Diario/main/splash-torabook-a51.png',color:'#29aaff'}};
+let armed=null,timer=0,opening=false,raf=0,mode='duration',op='+',shiftOp='+',lastDate=new Date();
+const splash=document.getElementById('splash'),img=document.getElementById('splashImg'),calc=document.getElementById('calcLayer'),morph=document.getElementById('morph');
 function disarm(){clearTimeout(timer);document.querySelectorAll('.label.show').forEach(x=>x.classList.remove('show'));armed=null}
-function reset(){
- cancelAnimationFrame(raf); clearTimeout(timer); opening=false; armed=null;
- document.querySelectorAll('.label.show').forEach(x=>x.classList.remove('show'));
- splash.style.display='none'; splash.removeAttribute('style'); img.removeAttribute('src');
-}
+function resetExternal(){cancelAnimationFrame(raf);opening=false;splash.style.display='none';splash.removeAttribute('style');img.removeAttribute('src');morph.style.display='none';disarm()}
 function arm(k){disarm();armed=k;document.getElementById('label-'+k).classList.add('show');timer=setTimeout(disarm,5000)}
-function ease(t){return 1-Math.pow(1-t,4)}
-function launch(k,b){
- if(opening)return; opening=true; clearTimeout(timer);
- const a=apps[k],r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
- const start=18, dur=1150, t0=performance.now();
- img.src=a.splash;
- splash.style.display='block';
- splash.style.left=(cx-start/2)+'px'; splash.style.top=(cy-start/2)+'px';
- splash.style.width=start+'px'; splash.style.height=start+'px'; splash.style.borderRadius='50%';
- splash.style.boxShadow='0 0 22px '+a.color;
- document.getElementById('label-'+k).classList.remove('show');
- function frame(now){
-   const p=Math.min(1,(now-t0)/dur),e=ease(p);
-   const left=(cx-start/2)*(1-e), top=(cy-start/2)*(1-e);
-   const w=start+(innerWidth-start)*e, h=start+(innerHeight-start)*e;
-   splash.style.left=left+'px'; splash.style.top=top+'px';
-   splash.style.width=w+'px'; splash.style.height=h+'px';
-   splash.style.borderRadius=(50*(1-e))+'%';
-   splash.style.boxShadow='0 0 '+(22+38*e)+'px '+a.color;
-   if(p<1) raf=requestAnimationFrame(frame);
-   else setTimeout(()=>{location.href=a.url},100);
- }
- raf=requestAnimationFrame(frame);
-}
-document.querySelectorAll('.launch').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.key;armed===k?launch(k,b):arm(k)}));
-document.querySelectorAll('.label').forEach(l=>l.addEventListener('click',()=>{const k=l.id.slice(6);if(armed===k)launch(k,document.getElementById(k))}));
-/* Critical fix: every return to Tora Suite starts clean, including BFCache/PWA restore. */
-addEventListener('pageshow',reset);
-addEventListener('pagehide',()=>{cancelAnimationFrame(raf)});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)reset()});
-addEventListener('focus',()=>{if(opening)reset()});
-if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=8').catch(()=>{}),{once:true});
+const ease=t=>1-Math.pow(1-t,4);
+function rectAnim(el,cx,cy,start,dur,reverse,done){const t0=performance.now();el.style.display='block';function f(now){let p=Math.min(1,(now-t0)/dur),e=ease(p);if(reverse)e=1-e;el.style.left=((cx-start/2)*(1-e))+'px';el.style.top=((cy-start/2)*(1-e))+'px';el.style.width=(start+(innerWidth-start)*e)+'px';el.style.height=(start+(innerHeight-start)*e)+'px';el.style.borderRadius=(50*(1-e))+'%';if(p<1)raf=requestAnimationFrame(f);else done&&done()}raf=requestAnimationFrame(f)}
+function launchExternal(k,b){if(opening)return;opening=true;clearTimeout(timer);const a=apps[k],r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;img.src=a.splash;splash.style.boxShadow='0 0 25px '+a.color;document.getElementById('label-'+k).classList.remove('show');rectAnim(splash,cx,cy,18,1150,false,()=>setTimeout(()=>location.href=a.url,100))}
+function openCalc(b){if(opening)return;opening=true;clearTimeout(timer);document.getElementById('label-timecalc').classList.remove('show');const r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;rectAnim(morph,cx,cy,18,1550,false,()=>{calc.classList.add('on');morph.style.display='none';opening=false;setNow()})}
+function closeCalc(){if(opening)return;opening=true;const b=document.getElementById('timecalc'),r=b.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;calc.classList.remove('on');rectAnim(morph,cx,cy,18,1200,true,()=>{morph.style.display='none';opening=false;disarm()})}
+document.querySelectorAll('.launch').forEach(b=>b.onclick=()=>{const k=b.dataset.key;if(armed!==k)return arm(k);k==='timecalc'?openCalc(b):launchExternal(k,b)});
+document.querySelectorAll('.label').forEach(l=>l.onclick=()=>{const k=l.id.slice(6);if(armed===k){const b=document.getElementById(k);k==='timecalc'?openCalc(b):launchExternal(k,b)}});
+document.getElementById('closeCalc').onclick=closeCalc;
+const pad=n=>String(n).padStart(2,'0');
+function digits(d){const mo=['GEN','FEB','MAR','APR','MAG','GIU','LUG','AGO','SET','OTT','NOV','DIC'][d.getMonth()];return [['DAY',pad(d.getDate())],['MONTH',mo],['YEAR',d.getFullYear()],['HOUR',pad(d.getHours())],['MIN',pad(d.getMinutes())]].map(x=>`<div class="digitBox"><small>${x[0]}</small><strong>${x[1]}</strong></div>`).join('')}
+function setNow(){const n=new Date();nowDigits.innerHTML=digits(n);lastDigits.innerHTML=digits(lastDate);if(!destDigits.innerHTML)destDigits.innerHTML=digits(n)}
+function parseDur(s){const m=String(s).trim().match(/^(-)?(\d{1,5})(?::([0-5]\d))?$/);if(!m)return null;let v=(+m[2])*60+(+(m[3]||0));return m[1]?-v:v}
+function fmt(v){const sign=v<0?'-':'';v=Math.abs(Math.round(v));const h=Math.floor(v/60),m=v%60;return [sign+String(h).padStart(2,'0')+':'+pad(m),sign+h+' ore e '+m+' minuti']}
+function show(v,date){const f=fmt(v);resultMain.textContent=f[0];resultLong.textContent=f[1];if(date){destDigits.innerHTML=digits(date);lastDate=new Date();lastDigits.innerHTML=digits(lastDate)}}
+document.querySelectorAll('.mode').forEach(x=>x.onclick=()=>{document.querySelectorAll('.mode').forEach(y=>y.classList.remove('active'));x.classList.add('active');mode=x.dataset.mode;document.querySelectorAll('.panel').forEach(y=>y.classList.remove('active'));document.getElementById('p-'+mode).classList.add('active')});
+document.querySelectorAll('[data-op]').forEach(x=>x.onclick=()=>{document.querySelectorAll('[data-op]').forEach(y=>y.classList.remove('sel'));x.classList.add('sel');op=x.dataset.op});
+document.querySelectorAll('[data-shift]').forEach(x=>x.onclick=()=>{document.querySelectorAll('[data-shift]').forEach(y=>y.classList.remove('sel'));x.classList.add('sel');shiftOp=x.dataset.shift});
+calculate.onclick=()=>{try{if(mode==='duration'){let a=parseDur(d1.value),b=parseDur(d2.value);if(a===null||b===null)throw 0;show(op==='+'?a+b:a-b)}else if(mode==='hours'){let a=parseDur(h1.value),b=parseDur(h2.value);if(a===null||b===null)throw 0;let v=b-a;if(v<0)v+=1440;show(v)}else if(mode==='dates'){let a=new Date(dt1.value),b=new Date(dt2.value);if(isNaN(a)||isNaN(b))throw 0;show((b-a)/60000,b)}else{let a=new Date(sd.value),v=parseDur(st.value);if(isNaN(a)||v===null)throw 0;let d=new Date(a.getTime()+(shiftOp==='+'?v:-v)*60000);show((d-a)/60000,d)}}catch(e){resultMain.textContent='ERRORE';resultLong.textContent='Controlla i valori inseriti'}};
+setNow();setInterval(()=>{if(calc.classList.contains('on'))setNow()},30000);
+addEventListener('pageshow',()=>{resetExternal();calc.classList.remove('on')});addEventListener('pagehide',()=>cancelAnimationFrame(raf));document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!calc.classList.contains('on'))resetExternal()});
+if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=9').catch(()=>{}),{once:true});
 })();
 </script></body></html>
