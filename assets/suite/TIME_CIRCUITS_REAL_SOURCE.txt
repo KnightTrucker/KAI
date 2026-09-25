@@ -1,0 +1,7 @@
+FOTO REALE FRONTALE TIME CIRCUITS
+Fonte ufficiale Factory Entertainment:
+https://factoryent.com/cdn/shop/files/TimeCircuitSPRFront.png?v=1723648189&width=1100
+
+La v0.13 la carica direttamente da questa fonte.
+Per renderla totalmente offline, salvare la stessa immagine come
+assets/suite/time-circuits-real-front.png e sostituire src in index.html.
