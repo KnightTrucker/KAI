@@ -1,0 +1,1 @@
+Photo reference currently loaded remotely in index.html. After approval, upload a local copy to assets/suite/ and replace the remote src for full offline use.
