@@ -143,6 +143,9 @@ body{position:fixed;inset:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,
  .tcRealPhoto{height:165px!important;aspect-ratio:1536/1493!important}
  .tcRealPhoto img{width:auto!important;max-width:100%!important;height:100%!important}
 }
+
+#p-shift.active~.go+.result strong{font-size:clamp(20px,5.5vw,34px)}
+@media(orientation:landscape){#p-shift.active~.go+.result strong{font-size:25px}}
 </style></head><body>
 <main id="app"><section class="scene">
 <img class="bg" src="./assets/suite/home-points.webp?v=14" alt="">
@@ -199,6 +202,14 @@ function setNow(){}
 function parseDur(s){const m=String(s).trim().match(/^(-)?(\d{1,5})(?::([0-5]\d))?$/);if(!m)return null;let v=(+m[2])*60+(+(m[3]||0));return m[1]?-v:v}
 function fmt(v){const sign=v<0?'-':'';v=Math.abs(Math.round(v));const h=Math.floor(v/60),m=v%60;return [sign+String(h).padStart(2,'0')+':'+pad(m),sign+h+' ore e '+m+' minuti']}
 function show(v,date){const f=fmt(v);resultMain.textContent=f[0];resultLong.textContent=f[1];if(date){lastDate=new Date()}}
+function pad2(n){return String(n).padStart(2,'0')}
+function fmtDateTime(d){return pad2(d.getDate())+'/'+pad2(d.getMonth()+1)+'/'+d.getFullYear()+' '+pad2(d.getHours())+':'+pad2(d.getMinutes())}
+function showShiftResult(start,durationMin,end,sign){
+  resultMain.textContent=fmtDateTime(end);
+  const dur=fmt(Math.abs(durationMin))[0];
+  resultLong.textContent=fmtDateTime(start)+' '+sign+' '+dur;
+  lastDate=new Date(end);
+}
 document.querySelectorAll('.mode').forEach(x=>x.onclick=()=>{document.querySelectorAll('.mode').forEach(y=>y.classList.remove('active'));x.classList.add('active');mode=x.dataset.mode;document.querySelectorAll('.panel').forEach(y=>y.classList.remove('active'));document.getElementById('p-'+mode).classList.add('active')});
 document.querySelectorAll('[data-op]').forEach(x=>x.onclick=()=>{document.querySelectorAll('[data-op]').forEach(y=>y.classList.remove('sel'));x.classList.add('sel');op=x.dataset.op});
 document.querySelectorAll('[data-shift]').forEach(x=>x.onclick=()=>{document.querySelectorAll('[data-shift]').forEach(y=>y.classList.remove('sel'));x.classList.add('sel');shiftOp=x.dataset.shift});
@@ -220,9 +231,9 @@ document.querySelectorAll('[data-hhmm]').forEach(el=>{
  el.addEventListener('blur',()=>{if(!hhmmFormat(el))el.classList.add('bad');else el.classList.remove('bad')});
 });
 calculate.onclick=()=>{try{
-document.querySelectorAll('[data-hhmm]').forEach(el=>{if(!hhmmFormat(el))throw 0;});if(mode==='duration'){let a=parseDur(d1.value),b=parseDur(d2.value);if(a===null||b===null)throw 0;show(op==='+'?a+b:a-b)}else if(mode==='hours'){let a=parseDur(h1.value),b=parseDur(h2.value);if(a===null||b===null)throw 0;let v=b-a;if(v<0)v+=1440;show(v)}else if(mode==='dates'){let a=new Date(dt1.value),b=new Date(dt2.value);if(isNaN(a)||isNaN(b))throw 0;show((b-a)/60000,b)}else{let a=new Date(sd.value),v=parseDur(st.value);if(isNaN(a)||v===null)throw 0;let d=new Date(a.getTime()+(shiftOp==='+'?v:-v)*60000);show((d-a)/60000,d)}}catch(e){resultMain.textContent='ERRORE';resultLong.textContent='Controlla i valori inseriti'}};
+document.querySelectorAll('[data-hhmm]').forEach(el=>{if(!hhmmFormat(el))throw 0;});if(mode==='duration'){let a=parseDur(d1.value),b=parseDur(d2.value);if(a===null||b===null)throw 0;show(op==='+'?a+b:a-b)}else if(mode==='hours'){let a=parseDur(h1.value),b=parseDur(h2.value);if(a===null||b===null)throw 0;let v=b-a;if(v<0)v+=1440;show(v)}else if(mode==='dates'){let a=new Date(dt1.value),b=new Date(dt2.value);if(isNaN(a)||isNaN(b))throw 0;show((b-a)/60000,b)}else{let a=new Date(sd.value),v=parseDur(st.value);if(isNaN(a)||v===null)throw 0;let d=new Date(a.getTime()+(shiftOp==='+'?v:-v)*60000);showShiftResult(a,v,d,shiftOp)}}catch(e){resultMain.textContent='ERRORE';resultLong.textContent='Controlla i valori inseriti'}};
 setNow();setInterval(()=>{if(calc.classList.contains('on'))setNow()},30000);
 addEventListener('pageshow',()=>{resetExternal();calc.classList.remove('on')});addEventListener('pagehide',()=>cancelAnimationFrame(raf));document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!calc.classList.contains('on'))resetExternal()});
-if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=16').catch(()=>{}),{once:true});
+if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=17').catch(()=>{}),{once:true});
 })();
 </script></body></html>

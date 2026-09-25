@@ -1,4 +1,4 @@
-const CACHE='torasuite-v0.16-timecircuits-utente';
+const CACHE='torasuite-v0.17-shift-data-ora-fix';
 const FILES=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png',
 './assets/suite/home-points.webp','./assets/suite/flux-capacitor-real.webp','./assets/suite/time-circuits-real-front.webp',
 './assets/suite/time-calculator-panel.webp','./assets/suite/powered-by-andrea-zollet.webp','./assets/suite/time-circuits-user.webp'];
