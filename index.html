@@ -190,6 +190,36 @@ body{position:fixed;inset:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,
 #book{left:72.13%!important;top:72.33%!important}
 /* rosso già centrato: invariato */
 #timecalc{left:19%!important;top:68.64%!important}
+
+/* v0.20 - LED: centro unico del bottone.
+   Niente correzioni "centro = left/top": il pallino e il glow sono lo stesso span.dot. */
+#navy{left:66.50%!important;top:35.20%!important}
+#tako{left:55.30%!important;top:55.10%!important}
+#book{left:73.60%!important;top:76.10%!important}
+#timecalc{left:19%!important;top:68.64%!important}
+
+/* Un solo elemento genera contemporaneamente nucleo bianco + luce + anello.
+   Quindi nucleo e luminescenza non possono più separarsi tra loro. */
+.launch.liveLed .dot,.launch#timecalc .dot{
+ left:50%!important;top:50%!important;
+ width:24%!important;aspect-ratio:1!important;
+ margin:0!important;
+ transform:translate(-50%,-50%) scale(1)!important;
+ transform-origin:50% 50%!important;
+ border-radius:50%!important;
+ background:#fff!important;
+ box-shadow:0 0 8px #fff,0 0 18px var(--c),0 0 34px var(--c)!important;
+}
+.launch.liveLed .dot:before,.launch#timecalc .dot:before{
+ content:""!important;position:absolute!important;inset:-100%!important;
+ border:2px solid var(--c)!important;border-radius:50%!important;opacity:.72!important;
+}
+.launch.liveLed .dot{animation:singleCenterPulse 1.35s ease-in-out infinite!important}
+.launch#timecalc .dot{animation:singleCenterPulse 1.8s ease-in-out infinite!important}
+@keyframes singleCenterPulse{
+ 0%,100%{transform:translate(-50%,-50%) scale(.92);filter:brightness(.98);opacity:.86}
+ 50%{transform:translate(-50%,-50%) scale(1.16);filter:brightness(1.55);opacity:1}
+}
 </style></head><body>
 <main id="app"><section class="scene">
 <img class="bg" src="./assets/suite/home-points.webp?v=14" alt="">
@@ -278,6 +308,6 @@ calculate.onclick=()=>{try{
 document.querySelectorAll('[data-hhmm]').forEach(el=>{if(!hhmmFormat(el))throw 0;});if(mode==='duration'){let a=parseDur(d1.value),b=parseDur(d2.value);if(a===null||b===null)throw 0;show(op==='+'?a+b:a-b)}else if(mode==='hours'){let a=parseDur(h1.value),b=parseDur(h2.value);if(a===null||b===null)throw 0;let v=b-a;if(v<0)v+=1440;show(v)}else if(mode==='dates'){let a=new Date(dt1.value),b=new Date(dt2.value);if(isNaN(a)||isNaN(b))throw 0;show((b-a)/60000,b)}else{let a=new Date(sd.value),v=parseDur(st.value);if(isNaN(a)||v===null)throw 0;let d=new Date(a.getTime()+(shiftOp==='+'?v:-v)*60000);showShiftResult(a,v,d,shiftOp)}}catch(e){resultMain.textContent='ERRORE';resultLong.textContent='Controlla i valori inseriti'}};
 setNow();setInterval(()=>{if(calc.classList.contains('on'))setNow()},30000);
 addEventListener('pageshow',()=>{resetExternal();calc.classList.remove('on')});addEventListener('pagehide',()=>cancelAnimationFrame(raf));document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!calc.classList.contains('on'))resetExternal()});
-if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=19').catch(()=>{}),{once:true});
+if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=20').catch(()=>{}),{once:true});
 })();
 </script></body></html>
