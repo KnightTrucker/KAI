@@ -183,6 +183,13 @@ body{position:fixed;inset:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,
  0%,100%{transform:translate(-50%,-50%) scale(1)}
  50%{transform:translate(-50%,-50%) scale(1.15)}
 }
+
+/* v0.19 - correzione pixel-su-pixel misurata sullo screenshot v0.18 */
+#navy{left:64.97%!important;top:34.42%!important}
+#tako{left:56.36%!important;top:53.23%!important}
+#book{left:72.13%!important;top:72.33%!important}
+/* rosso già centrato: invariato */
+#timecalc{left:19%!important;top:68.64%!important}
 </style></head><body>
 <main id="app"><section class="scene">
 <img class="bg" src="./assets/suite/home-points.webp?v=14" alt="">
@@ -271,6 +278,6 @@ calculate.onclick=()=>{try{
 document.querySelectorAll('[data-hhmm]').forEach(el=>{if(!hhmmFormat(el))throw 0;});if(mode==='duration'){let a=parseDur(d1.value),b=parseDur(d2.value);if(a===null||b===null)throw 0;show(op==='+'?a+b:a-b)}else if(mode==='hours'){let a=parseDur(h1.value),b=parseDur(h2.value);if(a===null||b===null)throw 0;let v=b-a;if(v<0)v+=1440;show(v)}else if(mode==='dates'){let a=new Date(dt1.value),b=new Date(dt2.value);if(isNaN(a)||isNaN(b))throw 0;show((b-a)/60000,b)}else{let a=new Date(sd.value),v=parseDur(st.value);if(isNaN(a)||v===null)throw 0;let d=new Date(a.getTime()+(shiftOp==='+'?v:-v)*60000);showShiftResult(a,v,d,shiftOp)}}catch(e){resultMain.textContent='ERRORE';resultLong.textContent='Controlla i valori inseriti'}};
 setNow();setInterval(()=>{if(calc.classList.contains('on'))setNow()},30000);
 addEventListener('pageshow',()=>{resetExternal();calc.classList.remove('on')});addEventListener('pagehide',()=>cancelAnimationFrame(raf));document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!calc.classList.contains('on'))resetExternal()});
-if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=18').catch(()=>{}),{once:true});
+if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=19').catch(()=>{}),{once:true});
 })();
 </script></body></html>
